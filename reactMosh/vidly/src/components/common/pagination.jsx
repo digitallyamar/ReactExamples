@@ -1,53 +1,37 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import _ from "lodash";
 
-// Input: Page numbers calculated based on number of items per page
-// Output: onClick
+const Pagination = (props) => {
+  const { itemsCount, pageSize, currentPage, onPageChange } = props;
 
-class Pagination extends Component {
-  state = {};
+  const pagesCount = Math.ceil(itemsCount / pageSize);
+  if (pagesCount === 1) return null;
+  const pages = _.range(1, pagesCount + 1);
 
-  getPageNavs = (totalPages) => {
-    let result = "";
-    for (let i = 1; i < totalPages; i++) {
-      result += (
-        <li className="page-item">
-          <a className="page-link" href="1">
-            {i}
-          </a>
-        </li>
-      );
-    }
+  return (
+    <nav>
+      <ul className="pagination">
+        {pages.map((page) => (
+          <li
+            key={page}
+            className={page === currentPage ? "page-item active" : "page-item"}
+          >
+            <a className="page-link" onClick={() => onPageChange(page)}>
+              {page}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 
-    console.log(result);
-
-    return result;
-  };
-
-  render() {
-    let totalPages = Math.floor(this.props.totalMovies / 4);
-
-    if (this.props.totalMovies % 4) totalPages++;
-
-    console.log("totalPages", totalPages);
-
-    let listElements = [];
-
-    for (let i = 1; i <= totalPages; i++) {
-      listElements.push(
-        <li className="page-item">
-          <a className="page-link" href={i}>
-            {i}
-          </a>
-        </li>
-      );
-    }
-
-    return (
-      <nav aria-label="Page navigation example">
-        <ul className="pagination">{listElements}</ul>
-      </nav>
-    );
-  }
-}
+Pagination.propTypes = {
+  itemsCount: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+};
 
 export default Pagination;
