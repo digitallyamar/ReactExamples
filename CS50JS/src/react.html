@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="react.production.min.js"></script>
+    <script src="react-dom.production.min.js"></script>
+    <script src="babel.min.js"></script>
+    <title>React</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        function Hello(props) {
+            return (
+                <h1>Hello {props.name}!</h1>
+            );
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Hello name="Amar" />
+                    <Hello name="Gopi" />
+                    <Hello name="Biscuit" />
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.querySelector("#app"))
+    </script>
+</body>
+
+</html>
